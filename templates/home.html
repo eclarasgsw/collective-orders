@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sammelbestellungen</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <body>
+    <h1 class="w3-center">Sammelbestellung</h1>
+    <div class="w3-container">
+      <h2>Produkten</h2>
+      <div>
+        {% for product in products %}
+          <div class="w3-border-bottom w3-row w3-section">
+            <div class="w3-half w3-padding">
+              <b>{{product['product_name']}}</b><br>
+              {{product['price']}} {{product['currency']}}/{{product['unit']}}<br>
+              {{product['producer']}}
+            </div>
+            <div class="w3-half w3-padding w3-margin-bottom">
+              <input type="number" id="amount" name="amount" min="1">
+            </div>
+          </div>        
+        {% endfor %}
+      </div>
+
+      <p class="w3-padding"><b>Total 55 Fr.</b></p>
+
+      <h2>Bestellung</h2>
+      <form>
+        <label for="depot">Depot </label>
+        <input type="text" id="depot" name="depot"><br><br>
+        <label for="fname">Vorname </label>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="lname">Nachname </label>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="email">E-Mail Adresse </label>
+        <input type="email" id="email" name="email"><br><br>
+        <input type="submit" value="Bestellen">    
+      </form>
+    </div>
+   
+  </body>
+</html>
