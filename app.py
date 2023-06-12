@@ -5,7 +5,7 @@ app = Flask(__name__)
 PRODUCTS = [
   {
     'id': 1,
-    'product_name': 'Karotten',
+    'name': 'Karotten',
     'price': '5',
     'currency': 'Fr.',
     'unit': 'kg',
@@ -13,7 +13,7 @@ PRODUCTS = [
   },
     {
     'id': 2,
-    'product_name': 'Erdbeeren',
+    'name': 'Erdbeeren',
     'price': '4',
     'currency': 'Fr.',
     'unit': '250g',
@@ -21,7 +21,7 @@ PRODUCTS = [
   },
     {
     'id': 3,
-    'product_name': 'Salat',
+    'name': 'Salat',
     'price': '3',
     'currency': 'Fr.',
     'unit': 'Stück',
@@ -29,10 +29,41 @@ PRODUCTS = [
   }
 ]
 
+DEPOTS = [
+  {
+    'id': 1,
+    'name': 'Lachen Drogerie',
+    'street_number': 4,
+    'street': 'fff',
+    'postcode': 9000,
+    'city': 'St.Gallen'
+  },
+  {
+    'id': 2,
+    'name': 'Liva Natura',
+    'street_number': 4,
+    'street': 'fff',
+    'postcode': 9000,
+    'city': 'St.Gallen'
+  },  
+  {
+    'id': 3,
+    'name': 'Benevolpark',
+    'street_number': 4,
+    'street': 'fff',
+    'postcode': 9000,
+    'city': 'St.Gallen'
+  }
+]
+
+AMOUNT = [1,2,3,4,5,6,7,8,9,10]
+
 @app.route("/")
 def hello_order():
   return render_template('home.html', 
-                         products=PRODUCTS)
+                        products=PRODUCTS,
+                        depots=DEPOTS,
+                        amount=AMOUNT)
 
 @app.route("/api/products")
 def list_products():
