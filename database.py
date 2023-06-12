@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, text
 
-db_connection_string = "mysql+pymysql://ivuv53np1py6mefv2u8e:pscale_pw_rqZ0qCnUa44q7LqSO8JmMmTcon9Oy31u59Ys6bLbI3w@aws.connect.psdb.cloud/collective-orders?charset=utf8mb4"
+db_connection_string = "mysql+pymysql://frbqbicyh7cod7fj4n25:pscale_pw_hCDpD8vD51OB1x5YVJ5feUCNFgtGc6nsUHtEu0ye9hG@aws.connect.psdb.cloud/collective-orders?charset=utf8mb4"
 
 engine = create_engine(
   db_connection_string,
@@ -12,5 +12,6 @@ engine = create_engine(
 )
 
 with engine.connect() as conn:
-  result=conn.execute(text("select * from depots"))
-  print(result.all())
+  result = conn.execute(text("select * from depots"))
+  firstresult=result.all()[0]
+  print(firstresult)
