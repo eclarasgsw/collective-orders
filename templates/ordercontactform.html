@@ -1,0 +1,29 @@
+<div class="w3-row">
+  <form>
+    <div class="w3-section">
+      <label for="depot"><b>Depot</b></label>
+      <select class="w3-select" name="depot">
+        <option value="" selected disabled></option>
+        {% for depot in depots %}
+          <option value="{{depot.id}}">{{depot.name}}</option>
+        {% endfor %}
+      </select>
+      
+    </div>        
+    <div class="w3-section">
+      <label for="fname"><b>Vorname</b></label>
+      <input class="w3-input" type="text" id="fname" name="fname">
+    </div>       
+    <div class="w3-section">
+      <label for="lname"><b>Nachname</b></label>
+      <input class="w3-input" type="text" id="lname" name="lname">
+    </div>
+    <div class="w3-section">        
+      <label for="email"><b>E-Mail Adresse</b></label>
+      <input class="w3-input" type="email" id="email" name="email">
+    </div>
+    <div class="w3-section">
+      <input class="w3-button w3-block w3-black" type="submit" value="Bestellen"> 
+    </div>
+  </form>
+</div>
