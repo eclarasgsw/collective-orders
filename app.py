@@ -26,13 +26,27 @@ PRODUCTS = [{
   'producer': 'St.Gallen - Müller'
 }]
 
+ORDERS = [{
+  'id': 1
+}, {
+  'id': 2
+}, {
+  'id': 3
+}]
+
 AMOUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 @app.route("/")
-def collective_order():
+def hello():
+  return render_template('home.html', orders=ORDERS)
+
+
+@app.route("/order/<id>")
+def order(id):
   depots = load_depots_from_db()
-  return render_template('home.html',
+  return render_template('order.html',
+                         orders=ORDERS,
                          products=PRODUCTS,
                          depots=depots,
                          amount=AMOUNT)
