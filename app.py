@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify
+from database import load_depots_from_db
 
 app = Flask(__name__)
 
@@ -29,9 +30,15 @@ AMOUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 @app.route("/")
-def hello_order():
-  return render_template('home.html', products=PRODUCTS, amount=AMOUNT)
+def order():
+  depots=load_depots_from_db()
+  return render_template('home.html', products=PRODUCTS, depots=depots, amount=AMOUNT)
 
+
+@app.route("/api/depots")
+def list_depots():
+  depots=load_depots_from_db()
+  return jsonify(depots)
 
 @app.route("/api/products")
 def list_products():

@@ -8,7 +8,7 @@
     <header class="w3-container w3-padding">
       <h1 class="w3-center">Sammelbestellung</h1>
     </header>
-    <div class="w3-container">       
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px>       
       <div class="w3-row-padding">
         <div class="w3-half">
           <div class="w3-container w3-card">
@@ -46,7 +46,9 @@
                     <label for="depot"><b>Depot</b></label>
                     <select class="w3-select" name="depot">
                       <option value="" selected disabled>Depot</option>
-
+                      {% for depot in depots %}
+                        <option value="{{depot.id}}">{{depot.name}}</option>
+                      {% endfor %}
                     </select>
                     
                   </div>        
