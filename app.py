@@ -93,9 +93,9 @@ def list_products():
   return jsonify(PRODUCTS)
 
 #Send order to database
-@app.route("/order/<id>/create")
+@app.route("/order/<id>/create", methods=['post'])
 def placeOrder(id):
-  data = request.args
+  data = request.form
 #  #add_order_to_db(id, data)
   return jsonify(data)
 
