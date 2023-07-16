@@ -5,6 +5,8 @@
     {% include 'nav.html' %}
     <div class="w3-section w3-container">
       <p>It's a success!</p>
+      <p>Danke {{order['first_name']}}. Dein Depot {{order['depot']}}. Deine E-Mail Adresse: / {{order['email']}}</p>
+      <p>Grouped Order Lieferdatum: {{grouped_order['date_delivery']}}</p>
     </div>
   </body>
 </html>

@@ -11,15 +11,22 @@ engine = create_engine(my_secret,
 
 def load_depots_from_db():
   with engine.connect() as conn:
-    result = conn.execute(text("select * from depots"))
+    result = conn.execute(text("select * FROM depots"))
     depots = []
     for row in result.all():
       depots.append(row._mapping)
     return depots
 
+'''def load_grouped_order_from_db(id):
+  with engine.connect() as conn:
+    result = conn.execute(
+      text("select * FROM grouped_order WHERE id = :val"),
+      val=id
+    )'''
 
-def add_order_to_db(id, data):
-  return jsonify(data)
+
+#def add_order_to_db(id, data):
+#  return jsonify(data)
   
  # with engine.connect() as conn:
   #  query = text(

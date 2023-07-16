@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_depots_from_db, add_order_to_db
+from database import load_depots_from_db #, add_order_to_db
 
 app = Flask(__name__)
 
@@ -28,7 +28,8 @@ PRODUCTS = [{
 
 GROUPED_ORDERS = [{
   'id': 1,
-  'name':'2023-11-16 - Erdbeeren rot - 250 g'
+  'name':'2023-11-16 - Erdbeeren rot - 250 g',
+  'date_delivery':'2023-11-16'
 }, {
   'id': 2,
   'name':''
@@ -93,11 +94,15 @@ def list_products():
   return jsonify(PRODUCTS)
 
 #Send order to database
-@app.route("/order/<id>/create", methods=['post'])
+@app.route("/order/<int:id>/create", methods=['post'])
 def placeOrder(id):
   data = request.form
+  grouped_order = GROUPED_ORDERS[id-1]
+  
 #  #add_order_to_db(id, data)
-  return jsonify(data)
+  return render_template('order_submitted.html', 
+                         order=data, 
+                         grouped_order=grouped_order)
 
 #Exemple from Jovian Job
 '''@app.route("/job/<id>/apply", methods=['post'])
