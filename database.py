@@ -18,17 +18,15 @@ def load_depots_from_db():
     return depots
 
 
-def load_grouped_order_from_db():
+def load_grouped_order_from_db(id):
   with engine.connect() as conn:
-    print("id: ", type(id))
-    result = conn.execute(text("SELECT * FROM grouped_orders WHERE id = 103 "))
+    print("id: ", id)
+    print("type id: ", type(id))
+    s = text("SELECT * FROM grouped_orders WHERE id = :val ")
+    result = conn.execute(s, {"val": id})
     rows = result.all()
-    print("rows", rows)
-    print("type rows", type(rows))
     list = []
     list = rows[0]._mapping
-    print("list: ", list)
-    print("type list: ", type(list))
     return list
 
 

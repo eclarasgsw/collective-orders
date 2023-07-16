@@ -94,14 +94,10 @@ def list_products():
   return jsonify(PRODUCTS)
 
 #Send order to database
-@app.route("/order/<int:id>/create", methods=['post'])
+@app.route("/order/<id>/create", methods=['post'])
 def placeOrder(id):
   data = request.form
-  grouped_order=load_grouped_order_from_db()
-  print("data", data)
-  print("type data", type(data))
-  print("grouped_order", grouped_order)
-  print("type grouped_order", type(grouped_order))
+  grouped_order=load_grouped_order_from_db(id)
 #  #add_order_to_db(id, data)
   return render_template('order_submitted.html', 
                          order=data, 
