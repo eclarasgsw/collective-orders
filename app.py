@@ -1,60 +1,113 @@
-from flask import Flask, render_template, jsonify
-from database import load_depots_from_db
+from flask import Flask, render_template, jsonify, request
+from database import load_depots_from_db, add_order_to_db
 
 app = Flask(__name__)
 
 PRODUCTS = [{
   'id': 1,
   'name': 'Karotten',
-  'price': '5',
+  'pricePerUnit': 5,
   'currency': 'Fr.',
-  'unit': 'kg',
+  'unit': '1 kg',
   'producer': 'Tübach - Granwehr'
 }, {
   'id': 2,
   'name': 'Erdbeeren',
-  'price': '4',
+  'pricePerUnit': 4,
   'currency': 'Fr.',
-  'unit': '250g',
+  'unit': '250 g',
   'producer': 'Gossau - Fust'
 }, {
   'id': 3,
   'name': 'Salat',
-  'price': '3',
+  'pricePerUnit': 3,
   'currency': 'Fr.',
   'unit': 'Stück',
   'producer': 'St.Gallen - Müller'
 }]
 
-ORDERS = [{
-  'id': 1
+GROUPED_ORDERS = [{
+  'id': 1,
+  'name':'2023-11-16 - Erdbeeren rot - 250 g'
 }, {
-  'id': 2
+  'id': 2,
+  'name':''
 }, {
-  'id': 3
+  'id': 3,
+  'name':''
 }]
 
-AMOUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+GROUPED_ORDERS_PRODUCTS = [{
+  'id':1,
+  'product_id': 2,
+  'product_name':'Erdbeeren',          #to delete
+  'product_price': 4,                  
+  'currency': 'Fr.',                  #to delete
+  'product_unit': '250 g',             #to delete
+  'product_producer':'Gossau - Fust',  #to delete
+  'max_quantity':10,
+  'total_outgoing':3,
+  'in_stock':7,
+  'grouped_order_id': 1,
+}]
+
+#GROUPED_ORDERS_PRODUCTS, Quantity
+SHOPPING_CART=[]
+
+ORDERED_PRODUCTS = [{
+  'id':1,
+  'grouped_orders_product_id': 1,
+#  'productPrice': 5,
+  'quantity': 3,
+  'total_price': 15,
+  'currency': 'Fr.'
+}]
+
+ORDERS = []
+
+QUANTITY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 @app.route("/")
-def hello():
-  return render_template('home.html', orders=ORDERS)
+def home():
+  return render_template('home.html', grouped_orders=GROUPED_ORDERS)
 
-
-@app.route("/order/<id>")
-def order(id):
+#individual grouped order forms
+@app.route("/order/<orderId>")
+def order(orderId, quantity={}):
   depots = load_depots_from_db()
+  #total_price = 0
+  #for cart_product in CART_PRODUCTS:
+  #  total_price += productPrice * quantity
+
   return render_template('order.html',
-                         orders=ORDERS,
-                         products=PRODUCTS,
+                         grouped_orders=GROUPED_ORDERS,
+                         grouped_orders_products=GROUPED_ORDERS_PRODUCTS,
                          depots=depots,
-                         amount=AMOUNT)
+                         quantity=QUANTITY,
+                         orderId=orderId)
 
-
+#API products old
 @app.route("/api/products")
 def list_products():
   return jsonify(PRODUCTS)
+
+#Send order to database
+@app.route("/order/<id>/create")
+def placeOrder(id):
+  data = request.args
+#  #add_order_to_db(id, data)
+  return jsonify(data)
+
+#Exemple from Jovian Job
+'''@app.route("/job/<id>/apply", methods=['post'])
+def apply_to_job(id):
+  data = request.form
+  job = load_job_from_db(id)
+  add_application_to_db(id, data)
+  return render_template('application_submitted.html', 
+                         application=data,
+                         job=job)'''
 
 
 if __name__ == "__main__":

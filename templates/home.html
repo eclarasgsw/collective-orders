@@ -2,9 +2,11 @@
 <html>
   {% include 'head.html' %}
   <body>
-  {% include 'header.html' %}
-    {% for order in orders %}
-      <a href="/order/{{order.id}}">Order ID: {{order.id}}</a><br>
-    {% endfor %}
+  {% include 'nav.html' %}
+    <div class="w3-section w3-container">
+      {% for grouped_order in grouped_orders %}
+        <a href="/order/{{grouped_order.id}}">Order ID: {{grouped_order.id}}</a><br>
+      {% endfor %}
+    </div>
   </body>
 </html>
