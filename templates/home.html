@@ -5,7 +5,7 @@
   {% include 'nav.html' %}
     <div class="w3-section w3-container">
       {% for grouped_order in grouped_orders %}
-        <a href="/order/{{grouped_order.id}}">Order ID: {{grouped_order.id}}</a><br>
+        <a href="/order/{{grouped_order.id}}">Bestellung: {{grouped_order.name}} - Datum: {{grouped_order.date_delivery}}</a><br>
       {% endfor %}
     </div>
   </body>

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, insert
 import os
 
 my_secret = os.environ['DB_CONNECTION_STRING']
@@ -22,22 +22,31 @@ def load_grouped_order_from_db(id):
   with engine.connect() as conn:
     print("id: ", id)
     print("type id: ", type(id))
-    s = text("SELECT * FROM grouped_orders WHERE id = :val ")
-    result = conn.execute(s, {"val": id})
+    query = text("SELECT * FROM grouped_orders WHERE id = :val ")
+    values = {"val": id}
+    result = conn.execute(query, values)
     rows = result.all()
+    print("rows", rows)
     list = []
     list = rows[0]._mapping
     return list
 
 
-#def add_order_to_db(id, data):
-#  return jsonify(data)
+def add_order_to_db(grouped_order_id, order_data):
+  with engine.connect() as conn:
+    print("order_data", order_data)
+    print("type order_data", type(order_data))
 
-# with engine.connect() as conn:
-#  query = text(
-#   "INSERT INTO orders (grouped_order_id) VALUES (:1)"
-#)
+    query = text(
+      "INSERT INTO orders (grouped_order_id, first_name, email) VALUES (:grouped_order_id, :first_name, :email)"
+    )
 
-#conn.execute(query,
-#            grouped_order_id=id
-#          )
+    values = {
+      'grouped_order_id': grouped_order_id,
+      'first_name': order_data['first_name'],
+      'email': order_data['email']
+    }
+
+    result = conn.execute(query, values)
+    print("result: ", result)
+    return result

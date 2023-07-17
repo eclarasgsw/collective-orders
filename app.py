@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_depots_from_db, load_grouped_order_from_db #, add_order_to_db
+from database import load_depots_from_db, load_grouped_order_from_db, add_order_to_db
 
 app = Flask(__name__)
 
@@ -98,7 +98,7 @@ def list_products():
 def placeOrder(id):
   data = request.form
   grouped_order=load_grouped_order_from_db(id)
-#  #add_order_to_db(id, data)
+  add_order_to_db(id, data)
   return render_template('order_submitted.html', 
                          order=data, 
                          grouped_order=grouped_order)
