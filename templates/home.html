@@ -4,9 +4,25 @@
   <body>
   {% include 'nav.html' %}
     <div class="w3-section w3-container">
-      {% for grouped_order in grouped_orders %}
-        <a href="/order/{{grouped_order.id}}">Bestellung: {{grouped_order.name}} - Datum: {{grouped_order.date_delivery}}</a><br>
-      {% endfor %}
+      <div class="w3-container w3-content w3-padding-32">
+        <table class="w3-table w3-card">
+        <tr>
+          <th>Name</th>
+          <th>Lieferdatum</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+          
+          {% for grouped_order in grouped_orders %}
+          <tr>
+            <td>{{grouped_order.name}}</td>
+            <td>{{grouped_order.date_delivery.strftime('%d.%m.%Y')}}</td>
+            <td>{{grouped_order.status}}</td>
+            <td><a class="w3-button w3-black" href="/order/{{grouped_order.id}}">Bestellen</a></td>
+          </tr>
+          {% endfor %}
+        </table>     
+      </div>
     </div>
   </body>
 </html>

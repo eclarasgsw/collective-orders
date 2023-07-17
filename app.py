@@ -1,42 +1,8 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_depots_from_db, load_grouped_order_from_db, add_order_to_db
+from database import load_depots_from_db, load_grouped_orders_from_db, load_grouped_order_from_db, add_order_to_db
 
 app = Flask(__name__)
 
-PRODUCTS = [{
-  'id': 1,
-  'name': 'Karotten',
-  'pricePerUnit': 5,
-  'currency': 'Fr.',
-  'unit': '1 kg',
-  'producer': 'Tübach - Granwehr'
-}, {
-  'id': 2,
-  'name': 'Erdbeeren',
-  'pricePerUnit': 4,
-  'currency': 'Fr.',
-  'unit': '250 g',
-  'producer': 'Gossau - Fust'
-}, {
-  'id': 3,
-  'name': 'Salat',
-  'pricePerUnit': 3,
-  'currency': 'Fr.',
-  'unit': 'Stück',
-  'producer': 'St.Gallen - Müller'
-}]
-
-GROUPED_ORDERS = [{
-  'id': 103,
-  'name':'2023-11-16 - Erdbeeren rot - 250 g',
-  'date_delivery':'2023-11-16'
-}, {
-  'id': 2,
-  'name':''
-}, {
-  'id': 3,
-  'name':''
-}]
 
 GROUPED_ORDERS_PRODUCTS = [{
   'id':1,
@@ -52,9 +18,6 @@ GROUPED_ORDERS_PRODUCTS = [{
   'grouped_order_id': 1,
 }]
 
-#GROUPED_ORDERS_PRODUCTS, Quantity
-SHOPPING_CART=[]
-
 ORDERED_PRODUCTS = [{
   'id':1,
   'grouped_orders_product_id': 1,
@@ -64,34 +27,33 @@ ORDERED_PRODUCTS = [{
   'currency': 'Fr.'
 }]
 
-ORDERS = []
-
 QUANTITY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
 
 @app.route("/")
 def home():
-  return render_template('home.html', grouped_orders=GROUPED_ORDERS)
+  grouped_orders=load_grouped_orders_from_db()
+  return render_template('home.html', grouped_orders=grouped_orders)
 
 #individual grouped order forms
 @app.route("/order/<orderId>")
 def order(orderId, quantity={}):
   depots = load_depots_from_db()
+  grouped_orders = load_grouped_orders_from_db()
   #total_price = 0
   #for cart_product in CART_PRODUCTS:
   #  total_price += productPrice * quantity
 
   return render_template('order.html',
-                         grouped_orders=GROUPED_ORDERS,
+                         grouped_orders=grouped_orders,
                          grouped_orders_products=GROUPED_ORDERS_PRODUCTS,
                          depots=depots,
                          quantity=QUANTITY,
                          orderId=orderId)
 
 #API products old
-@app.route("/api/products")
-def list_products():
-  return jsonify(PRODUCTS)
+#@app.route("/api/products")
+#def list_products():
+#  return jsonify(PRODUCTS)
 
 #Send order to database
 @app.route("/order/<id>/create", methods=['post'])

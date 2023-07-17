@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, text, insert
+from sqlalchemy import create_engine, text
 import os
 
 my_secret = os.environ['DB_CONNECTION_STRING']
@@ -17,11 +17,16 @@ def load_depots_from_db():
       depots.append(row._mapping)
     return depots
 
+def load_grouped_orders_from_db():
+  with engine.connect() as conn:
+    result = conn.execute(text("select * FROM grouped_orders"))
+    grouped_orders = []
+    for row in result.all():
+      grouped_orders.append(row._mapping)
+    return grouped_orders
 
 def load_grouped_order_from_db(id):
   with engine.connect() as conn:
-    print("id: ", id)
-    print("type id: ", type(id))
     query = text("SELECT * FROM grouped_orders WHERE id = :val ")
     values = {"val": id}
     result = conn.execute(query, values)
