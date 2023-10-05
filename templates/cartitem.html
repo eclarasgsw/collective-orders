@@ -5,14 +5,17 @@
     <i>{{grouped_orders_product.product_producer}}</i>
   </div>
   <div class="w3-half w3-margin-bottom w3-section">
-   <select class="w3-select w3-border w3-round-large" <!--name="quantity-{{grouped_orders_product.product_name}}"-->>
-      <option value="">Anzahl</option>
-      {% for quantity in quantity %}
-        <option value="{{quantity}}">{{quantity}}</option>
-      {% endfor %}
-    </select>
+   <select class="w3-select w3-border w3-round-large" name="quantity-product">
+    <option value="">Anzahl</option>
+    {% for quantity in quantity %}
+    <option value="{{quantity}}">{{quantity}}</option>
+    {% endfor %}
+  </select>
     <p>
-      {{grouped_orders_product.product_price}}*2
+      <!--todo multiply price with choosed quantity-->
+      
+      {% set price = grouped_orders_product.product_price %}
+      {{price}}
     </p>
   </div>
 </div> 

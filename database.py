@@ -39,8 +39,6 @@ def load_grouped_order_from_db(id):
 
 def add_order_to_db(grouped_order_id, order_data):
   with engine.connect() as conn:
-    print("order_data", order_data)
-    print("type order_data", type(order_data))
 
     query = text(
       "INSERT INTO orders (grouped_order_id, first_name, email) VALUES (:grouped_order_id, :first_name, :email)"
@@ -53,5 +51,24 @@ def add_order_to_db(grouped_order_id, order_data):
     }
 
     result = conn.execute(query, values)
-    print("result: ", result)
+    
+    return result
+
+
+def add_ordered_products_to_db(grouped_orders_products_id):
+  with engine.connect() as conn:
+
+    query = text(
+      "INSERT INTO ordered_products (grouped_orders_products_id, quantity, total_price, order_id) VALUES (:grouped_orders_products_id, :quantity, :total_price, :order_id)"
+    )
+
+    values = {
+      'grouped_orders_products_id': grouped_orders_products_id,
+      'quantity': ordered_product_data['quantity'],
+      'total_price': order_data['total_price'],
+      'order_id': ordered_product_data['order_id']
+    }
+
+    result = conn.execute(query, values)
+    
     return result

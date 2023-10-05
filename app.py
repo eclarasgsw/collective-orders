@@ -15,7 +15,7 @@ GROUPED_ORDERS_PRODUCTS = [{
   'max_quantity':10,
   'total_outgoing':3,
   'in_stock':7,
-  'grouped_order_id': 1,
+  'grouped_order_id': 1
 }]
 
 ORDERED_PRODUCTS = [{
@@ -32,6 +32,7 @@ QUANTITY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 @app.route("/")
 def home():
   grouped_orders=load_grouped_orders_from_db()
+  
   return render_template('home.html', grouped_orders=grouped_orders)
 
 #individual grouped order forms
